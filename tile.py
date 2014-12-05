@@ -1,6 +1,7 @@
 import pygame
 origin_x = 400-16
 
+
 class Tile(pygame.sprite.Sprite):
     def __init__(self):
         super(Tile, self).__init__()
