@@ -30,6 +30,10 @@ window.fill(white)
 l = level.Level('level1.txt')
 l.drawTiles(window)
 
+#game state variables
+cameraPos = (0,0)
+horScroll = 0
+vertScroll = 0
 
 
 
@@ -48,21 +52,68 @@ def render():
     pygame.display.flip()
 
 gameLoop = True    
-#while gameLoop:
-render()
+while gameLoop:
+    clock.tick(60) #limits game speed
+    render()
 
 
 
 
 
     #Check for keyboard or mouse input
-#    for event in pygame.event.get():
-#            
-#        if event.type==pygame.QUIT:
-#            pygame.display.quit()
-#            sys.exit()
+    for event in pygame.event.get():
+           
+        if event.type==pygame.QUIT:
+            pygame.display.quit()
+            sys.exit()
 
-#    window.blit(tile_blue, (0, 0))
-#    render() #screen refresh
-#    clock.tick(60) #limits game speed
+
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                pygame.display.quit()
+                sys.exit()
+            elif event.key == pygame.K_SPACE or event.key == pygame.K_UP:
+                pass
+            elif event.key == pygame.K_RIGHT:
+                horScroll = 1
+            elif event.key == pygame.K_LEFT:
+                horScroll = -1
+            elif event.key == pygame.K_UP:
+                vertScroll = -1
+            elif event.key == pygame.K_DOWN:
+                vertScroll = 1
+            
+                            
+        elif event.type == pygame.KEYUP:
+            #stop moving
+            if event.key == pygame.K_RIGHT:
+                if pygame.key.get_pressed()[K_LEFT] == True:
+                    horScroll = -1
+                else:
+                    horScroll = 0
+
+            if event.key == pygame.K_LEFT:
+                if pygame.key.get_pressed()[K_RIGHT] == True:
+                    horScroll = 1
+                else:
+                    horScroll = 0
+
+            if event.key == pygame.K_UP:
+                if pygame.key.get_pressed()[K_DOWN] == True:
+                    vertScroll = 1
+                else:
+                    vertScroll = 0
+
+            if event.key == pygame.K_DOWN:
+                if pygame.key.get_pressed()[K_UP] == True:
+                    vertScroll = -1
+                else:
+                    vertScroll = 0
+           
+                
+
+
+    window.blit(tile_blue, (0, 0))
+    render() #screen refresh
+    clock.tick(60) #limits game speed
     
